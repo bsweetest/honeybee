@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>i love you</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+}
+.heart{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(-20deg) rotateY(0deg);
+    animation: rotate 20s linear infinite;
+}
+@keyframes rotate{
+    0%{ transform: perspective(1000px) rotateX(-20deg) rotateY(360deg); }
+    100%{ transform: perspective(1000px) rotateX(-20deg) rotateY(0deg); }
+}
+.heart span{
+    position: absolute;
+    color: #ff4d6d;
+    font: bold 14px 'Arial';
+    text-shadow: 0 0 10px #ff4d6d,
+                 0 0 20px #ff4d6d,
+                 0 0 40px #ff4d6d,
+                 0 0 80px #ff4d6d;
+    white-space: nowrap;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    animation: animate 4s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.05s);
+}
+@keyframes animate{
+    0%,100%{ transform: translateZ(0px); }
+    50%{ transform: translateZ(20px); }
+}
+</style>
+</head>
+<body>
+<div class="heart"></div>
+<script>
+let heart = document.querySelector('.heart');
+let text = "i love you, roderick ";
+for(let i = 0; i < 1200; i++){
+    let span = document.createElement('span');
+    span.style.setProperty('--i', i);
+    span.innerText = text;
+    let angle = i * 0.174532925;
+    let x = 16 * Math.pow(Math.sin(angle), 3);
+    let y = 13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle);
+    let z = (i % 15) * 8 - 60;
+    span.style.transform = `translate3d(${x * 10}px, ${-y * 10}px, ${z}px) rotateY(${angle}rad)`;
+    heart.appendChild(span); // INI TADI KETINGGALAN DI LUAR
+}
+</script>
+</body>
+</html>
